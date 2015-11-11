@@ -1,29 +1,127 @@
+@import url(https://fonts.googleapis.com/css?family=Poiret+One);
 
 $fa-font-path: "/bower_components/font-awesome/fonts";
 
+@import 'bourbon/app/assets/stylesheets/bourbon';
+@import 'neat/app/assets/stylesheets/neat';
 @import 'font-awesome/scss/font-awesome';
 
-/**
- * App-wide Styles
- */
 
-.browsehappy {
-    margin: 0.2em 0;
-    background: #ccc;
-    color: #000;
-    padding: 0.2em 0;
+$vermillion: #E34234;
+$lightvermillion: lighten($vermillion, 30%);
+
+* {
+	margin: 0;
+	padding: 0;
 }
 
-/* Responsive: Portrait tablets and up */
-@media screen and (min-width: 768px) {
-    .container {
-        max-width: 730px;
-    }
+body {
+	@include background(linear-gradient(rgba($vermillion, 0.6), rgba($lightvermillion, 0.6)), url(https://images.unsplash.com/photo-1444728399417-08d2aa39e6f4?ixlib=rb-0.3.5&q=80&fm=jpg&s=eb535d833df9ee40b253611489a774cf), no-repeat 50% fixed);
+	background-color: $vermillion;
+	background-attachment: fixed;
+	background-repeat: no-repeat;
+	background-size: cover;
 }
 
-// Component styles are injected through grunt
-// injector
-@import 'account/login/login.scss';
-@import 'admin/admin.scss';
-@import 'main/main.scss';
-// endinjector
+header {
+	nav {
+		margin: 20px;
+		float: right;
+		a {
+			color: rgba(255,255,255,0.7);
+			
+			&:hover {
+			color: rgba(255,255,255,1);
+			}
+		}
+	}
+	font-family: 'Poiret One', sans-serif;
+	text-align: center;
+	color:white;
+	text-shadow: 3px 0px 10px black;
+	@include outer-container;
+}
+
+h1 {
+	margin: 0.5em;
+	font-size: 5em;	
+	clear: both;
+}
+
+h2 {
+	font-size: 1.5em;
+	margin: 0.5em;
+	color: white;
+	text-shadow: 3px 0px 10px black;
+	font-family: 'Poiret One', sans-serif;
+}
+button {
+		height: 2rem;
+		padding:0.5em;
+		border: none;
+		border-bottom: 3px solid darken($vermillion, 10%);
+		font-size: 1em;
+		font-weight: 700;
+		background-color: rgba(white,0.2);
+		color: black;
+	}
+
+.search {
+	@include span-columns(6);
+	@include shift(3);
+	input[type='text'] {
+		padding-left: 0.05em;
+		width: 80%;
+		height:2rem;
+		border: none;
+		border-bottom: 3px solid darken($vermillion, 10%);
+		font-size: 1.5rem;
+		background-color: rgba(255,255,255,0.2);
+		vertical-align: bottom;
+		color: black;
+	}
+}
+
+
+section {
+	max-width: 910px;
+	margin: 0 auto;
+	
+	.result {
+		margin: 0px 100px 10px 100px;
+		padding: 5px;
+		border: 1px solid black;
+		background-color: rgba(255,255,255, 0.2);
+		img {
+			float: left;
+			margin-right: 5px;
+		}
+		.attend {
+			margin: 5px;
+			float: right;
+			border-radius: 100%;
+			border: none;
+			//border: 1px solid $vermillion;
+			line-height: 1em;
+			color: green;
+			cursor: pointer;
+			transition: all 0.3s;
+
+			&:hover {
+				background-color: rgba(255,255,255,0.8);
+			}
+		}
+		clear: both;
+		overflow: auto;
+	}
+
+	a {
+		color: black;
+		font-weight: 700;
+
+		&:hover {
+			text-decoration: none;
+		}
+	}
+}
+
