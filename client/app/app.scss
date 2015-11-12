@@ -6,6 +6,7 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 @import 'neat/app/assets/stylesheets/neat';
 @import 'font-awesome/scss/font-awesome';
 
+@import 'main/main';
 
 $vermillion: #E34234;
 $lightvermillion: lighten($vermillion, 30%);
@@ -86,7 +87,8 @@ button {
 section {
 	max-width: 910px;
 	margin: 0 auto;
-	
+	margin-top: 1em;
+
 	.result {
 		margin: 0px 100px 10px 100px;
 		padding: 5px;
@@ -103,12 +105,12 @@ section {
 			border: none;
 			//border: 1px solid $vermillion;
 			line-height: 1em;
-			color: green;
+			color: rgba(255,255,255,0.8);
 			cursor: pointer;
 			transition: all 0.3s;
 
 			&:hover {
-				background-color: rgba(255,255,255,0.8);
+				background-color: rgba(255,255,255,0.4);
 			}
 		}
 		clear: both;

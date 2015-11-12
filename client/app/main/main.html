@@ -5,19 +5,20 @@
     <h1>FINDABAR</h1>
     <h2>Where Are You?</h2>
     <div class="search">
-        <input type="text">
+      <form ng-submit="search()">
+        <input type="text" ng-model="searchTerm">
         <button>Search</button>
+      </form>
     </div>
 </header>
 
 <section class="results">
-   <h2>Bars Near You</h2>
   <div class="result" ng-repeat="bar in bars">
     <h3>{{bar.name}} - <small>{{bar.location.display_address[0]}}</small></h3>
     <img ng-src="{{bar.image_url}}"><p>{{bar.snippet_text}}</p>
     <p><a ng-href="{{bar.url}}">Read More...</a></p>
-    
-    <button class="attend"><i class="fa fa-check"></i></button>
+  
+    <button class="attend" ng-click="attending(bar.id)"><i class="fa fa-check" ng-class="{active: attending.indexOf(bar.id) > -1}"></i></button>
   </div>
   </div>
 </section>
