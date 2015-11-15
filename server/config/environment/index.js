@@ -35,6 +35,7 @@ var all = {
   // List of user roles
   userRoles: ['guest', 'user', 'admin'],
 
+
   // MongoDB connection options
   mongo: {
     options: {
@@ -44,10 +45,13 @@ var all = {
     }
   },
 
+
 };
 
 // Export the config object based on the NODE_ENV
 // ==============================================
 module.exports = _.merge(
   all,
-  require('./' + process.env.NODE_ENV + '.js') || {});
+  require('./' + process.env.NODE_ENV + '.js') || {},
+  require('./api.js') || {}
+  );
