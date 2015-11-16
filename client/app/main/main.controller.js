@@ -26,8 +26,10 @@ angular.module('findabarApp')
           var idx = _.findIndex(bars, {id: bar.id});
           $http.get('/api/venues/' + bar.id).success(function(attendees) {
             bars[idx].attendance = attendees;
-            if(currentUser && _.findIndex(attendees, currentUser) >= 0) {
-              $scope.attend.push(bar.id);
+            if(Auth.isLoggedIn()) {
+              if(attendees.indexOf(currentUser) !== -1) {
+                $scope.attend.push(bar.id);
+              }
             }
           });
         });

@@ -11,7 +11,7 @@
 
 <section class="results">
   <div class="result" ng-repeat="bar in bars">
-    <h3>{{bar.name}} - <small>{{bar.address}} - <strong>{{bar.attendance.length}} going</strong></small></h3>
+    <h3>{{bar.name}} - <small>{{bar.address}} - <strong>{{bar.attendance === false ? 0 : bar.attendance.length}} going</strong></small></h3>
     <img ng-src="{{bar.image_url}}"><p>{{bar.snippet_text}}</p>
     <p><a ng-href="{{bar.url}}">Read More...</a></p>
   
