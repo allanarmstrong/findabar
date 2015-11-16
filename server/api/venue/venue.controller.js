@@ -13,10 +13,10 @@ exports.index = function(req, res) {
 
 // Get a single venue
 exports.show = function(req, res) {
-  Venue.findById(req.params.id, function (err, venue) {
+  Venue.findOne({id: req.params.id}, function (err, venue) {
     if(err) { return handleError(res, err); }
-    if(!venue) { return res.status(404).send('Not Found'); }
-    return res.json(venue);
+    if(!venue) { return res.json(false); }
+    return res.json(venue.attendance);
   });
 };
 
@@ -31,13 +31,13 @@ exports.create = function(req, res) {
 // Updates an existing venue in the DB.
 exports.update = function(req, res) {
   if(req.body._id) { delete req.body._id; }
-  Venue.findOne({name: req.params.id}, function (err, venue) {
+  Venue.findOne({id: req.params.id}, function (err, venue) {
     if (err) { return handleError(res, err); }
     if (!venue) { return res.status(404).send('Not Found'); }
     var updated = _.extend(venue, req.body);
-    console.log(updated);
     updated.save(function (err) {
       if (err) { return handleError(res, err); }
+      console.log(updated);
       return res.status(200).json(venue);
     });
   });

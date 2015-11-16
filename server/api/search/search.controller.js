@@ -18,6 +18,22 @@ exports.index = function(req, res) {
 
 exports.search = function(req, res) {
 	var location = req.params.location;
+/*THIS IS A FAILED EXPERIMENT
+	var getAttendees = function(barID) { 
+		//Now get them from the venue model.
+			Venue.findOne({id: barID}, function(err, venue) {
+				if(err)
+					return handleError(res,err);
+				//Merge them into the results.
+				if(!venue) {
+					console.log("No venue exists");
+					return false;
+				} else {
+					console.log("Venue exists: ", venue.attendance);
+					return venue.attendance;
+				}
+			});
+		}*/
 
 	yelp.search({term: "bars", location: location}, function(err, data) {
 		if (err)
@@ -31,37 +47,16 @@ exports.search = function(req, res) {
 				address: business.location.display_address[0],
 				snippet_text: business.snippet_text,
 				image_url: business.image_url,
-				url: business.url
+				url: business.url,
+				//attendance: getAttendees(business.id) || false
 			};
 		});
 
 
 		//Now we need to find the businesses in the venue model so we can get people who are attending!
 		//So we'll get all the bar ids first?
-		var ids = results.map(function(business) {
 
-			return business.id;
-		});
-		console.log("IDS: ", ids);
-
-		//Now get them from the venue model.
-		Venue.find({name: {$in: ids}}, function(err, venues) {
-			if(err)
-				return handleError(res,err);
-			//Merge them into the results.
-			venues.forEach(function(venue) {
-				console.log("Checking venue: ", venue); 
-				var idx = _.findIndex(results,{id: venue.name})
-				if (venue.attendance.length > 0) {
-					var i = _.findIndex(results, {'id': venue.id});
-					_.assign(results[i], {attendance: venue.attendance});
-				} else {
-					var i = _.findIndex(results, {'id': venue.id});
-					_.assign(results[i], {attendance: []});
-				}
-			});
-		});
-		console.log(results);
+		//console.log(results);
 		return res.status(200).json(results);
 	});
 };

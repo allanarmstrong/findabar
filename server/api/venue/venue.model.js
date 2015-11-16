@@ -4,7 +4,7 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var VenueSchema = new Schema({
-  name: String,
+  id: String,
   attendance: [String],
 });
 

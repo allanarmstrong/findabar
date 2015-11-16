@@ -6,41 +6,47 @@ angular.module('findabarApp')
     $scope.attend = [];
     $scope.searchTerm = '';
     var currBar = this;
-    var currentUser = Auth.getCurrentUser()._id;
-    console.log(currentUser);
+    if (Auth.isLoggedIn()) {
+      var currentUser = Auth.getCurrentUser()._id;
+    }
 
     var previousSearch = sessionStorage.getItem('search');
     if (previousSearch) {
       $scope.searchTerm = previousSearch;
        $http.get('/api/search/' + previousSearch).success(function(bars) {
-        console.log(bars);
         $scope.bars = bars;
+        sessionStorage.removeItem('search');
       });
     }
 
     $scope.search = function() {
       $http.get('/api/search/' + $scope.searchTerm).success(function(bars) {
         console.log(bars);
+        _.forEach(bars, function(bar) {
+          var idx = _.findIndex(bars, {id: bar.id});
+          $http.get('/api/venues/' + bar.id).success(function(attendees) {
+            bars[idx].attendance = attendees;
+            if(currentUser && _.findIndex(attendees, currentUser) >= 0) {
+              $scope.attend.push(bar.id);
+            }
+          });
+        });
         $scope.bars = bars;
       });
     };
 
     $scope.attending = function(id) {
         var idx = _.findIndex($scope.bars, {id: id});
-        if ($scope.bars[idx].hasOwnProperty('attendance')) {
+        if ($scope.bars[idx].attendance) {
             if($scope.bars[idx].attendance.indexOf(currentUser) === -1) {
 
               $scope.attend.push(id);
               $scope.bars[idx].attendance.push(currentUser);
-              console.log($scope.attend);
-              console.log($scope.bars[idx].attendance);
 
             } else {
              
             $scope.attend.splice($scope.attend.indexOf(id), 1);
              $scope.bars[idx].attendance.splice($scope.bars[idx].attendance.indexOf(currentUser),1);
-               console.log($scope.attend);
-              console.log($scope.bars[idx].attendance);
             }
 
             $http.put('/api/venues/' + id, {attendance: $scope.bars[idx].attendance});
@@ -49,7 +55,7 @@ angular.module('findabarApp')
             $scope.bars[idx].attendance = [currentUser];
             $scope.attend.push(id);
             var newBar = {
-              name: $scope.bars[idx].id,
+              id: $scope.bars[idx].id,
               attendance: $scope.bars[idx].attendance
             };
             $http.post('/api/venues', newBar);
@@ -59,6 +65,7 @@ angular.module('findabarApp')
       $scope.update = function(id) {
         currBar.id = id;
         if (Auth.isLoggedIn()) {
+          currentUser = Auth.getCurrentUser()._id;
           $scope.attending(currBar.id);
         } else {
           sessionStorage.setItem('search', $scope.searchTerm);
