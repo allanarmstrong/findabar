@@ -11,11 +11,11 @@
 
 <section class="results">
   <div class="result" ng-repeat="bar in bars">
-    <h3>{{bar.name}} - <small>{{bar.location.display_address[0]}}</small></h3>
+    <h3>{{bar.name}} - <small>{{bar.address}} - <strong>{{bar.attendance.length}} going</strong></small></h3>
     <img ng-src="{{bar.image_url}}"><p>{{bar.snippet_text}}</p>
     <p><a ng-href="{{bar.url}}">Read More...</a></p>
   
-    <button class="attend" ng-click="attending(bar.id)"><i class="fa fa-check" ng-class="{active: attend.indexOf(bar.id) > -1}"></i></button>
+    <button class="attend" ng-click="update(bar.id)"><i class="fa fa-check" ng-class="{active: attend.indexOf(bar.id) > -1}"></i></button>
   </div>
   </div>
 </section>
