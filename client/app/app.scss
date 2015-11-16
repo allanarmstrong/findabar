@@ -70,7 +70,7 @@ button {
 .search {
 	@include span-columns(6);
 	@include shift(3);
-	input[type='text'] {
+	.searchBox {
 		padding-left: 0.05em;
 		width: 80%;
 		height:2rem;
