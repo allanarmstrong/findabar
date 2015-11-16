@@ -1,7 +1,4 @@
 <header>
-    <nav>
-      <a href="#">Login with Twitter</a>
-  </nav>
     <h1>FINDABAR</h1>
     <h2>Where Are You?</h2>
     <div class="search">
@@ -18,7 +15,11 @@
     <img ng-src="{{bar.image_url}}"><p>{{bar.snippet_text}}</p>
     <p><a ng-href="{{bar.url}}">Read More...</a></p>
   
-    <button class="attend" ng-click="attending(bar.id)"><i class="fa fa-check" ng-class="{active: attending.indexOf(bar.id) > -1}"></i></button>
+    <button class="attend" ng-click="attending(bar.id)"><i class="fa fa-check" ng-class="{active: attend.indexOf(bar.id) > -1}"></i></button>
   </div>
   </div>
 </section>
+
+<footer>
+<p> &copy; 2015 <a href="http://www.aja.space">Allan Armstrong</a> | Powered by <a href="https://www.yelp.com">YELP!</a></p>
+</footer>

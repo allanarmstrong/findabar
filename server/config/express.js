@@ -12,6 +12,7 @@ var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var cookieParser = require('cookie-parser');
 var errorHandler = require('errorhandler');
+var session = require('express-session');
 var path = require('path');
 var config = require('./environment');
 var passport = require('passport');
@@ -27,7 +28,10 @@ module.exports = function(app) {
   app.use(bodyParser.json());
   app.use(methodOverride());
   app.use(cookieParser());
+  app.use(session({ secret: process.env.SESSION_SECRET, resave: true, saveUninitialized: true }));
+
   app.use(passport.initialize());
+  app.use(passport.session());
   if ('production' === env) {
     app.use(favicon(path.join(config.root, 'public', 'favicon.ico')));
     app.use(express.static(path.join(config.root, 'public')));

@@ -108,6 +108,11 @@ section {
 			color: rgba(255,255,255,0.8);
 			cursor: pointer;
 			transition: all 0.3s;
+			transition: color 0.5s;
+
+			.active {
+				color: green;
+			}
 
 			&:hover {
 				background-color: rgba(255,255,255,0.4);
@@ -125,5 +130,21 @@ section {
 			text-decoration: none;
 		}
 	}
+}
+
+
+footer {
+	position: relative;
+	top: 100%;
+	text-align: center;
+	a {
+		color: black;
+		font-weight: 700;
+
+		&:hover {
+			text-decoration: none;
+		}
+	}
+
 }
 
